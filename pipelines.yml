@@ -19,6 +19,8 @@ pipelines:
       - name: build
         type: Bash
         configuration:
+          environmentVariables:
+            buildName: python-example
           inputResources:
             - name: python_app
           integrations:
@@ -28,7 +30,8 @@ pipelines:
             - pushd $res_python_app_resourcePath
             - python setup.py sdist
             - pwd
-            - jfrog rt u dist/python-example-0.1.tar.gz python-local
+            - jfrog rt u dist/python-example-0.1.tar.gz python-local --build-name=$buildName --build-number=$run_number
+            - add_run_files /tmp/jfrog/. jfrog
       - name: publish_build
         type: PublishBuildInfo
         configuration:
