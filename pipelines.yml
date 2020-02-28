@@ -6,16 +6,12 @@ resources:
       path: ranjithrs/python_example
       branches:
         include: master
-  - name: my_build_info
+  - name: python_app_build_info
     type: BuildInfo
     configuration:
       sourceArtifactory: art
       buildName: python-app
-      buildNumber: 1
-  - name: python_app_filespec
-    type: FileSpec
-    configuration:
-      
+      buildNumber: 1      
 
 pipelines:
   - name: python_pipeline
