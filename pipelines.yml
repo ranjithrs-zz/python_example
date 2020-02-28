@@ -1,0 +1,35 @@
+resources:
+  - name: python_app
+    type: GitRepo
+    configuration:
+      gitProvider: ranjithr_github
+      path: ranjithrs/python_example
+      branches:
+        include: master
+  - name: my_build_info
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: art
+      buildName: python-app
+      buildNumber: 1
+  - name: python_app_filespec
+    type: FileSpec
+    configuration:
+      
+
+pipelines:
+  - name: python_pipeline
+    steps:
+      - name: build
+        type: Bash
+        configuration:
+          inputResources:
+            - name: python_app
+          inputIntegrations:
+            - name: art
+          execution:
+            onExecute:
+              - pushd $res_python_app_resourcePath
+              - python setup.py sdist
+              - jfrog rt u dist/python-example-1.0.tar.gz python-local
+            
