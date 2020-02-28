@@ -27,5 +27,6 @@ pipelines:
           onExecute:
             - pushd $res_python_app_resourcePath
             - python setup.py sdist
+            - pwd
             - jfrog rt u dist/python-example-0.1.tar.gz python-local
             
