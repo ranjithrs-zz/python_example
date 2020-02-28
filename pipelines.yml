@@ -11,7 +11,7 @@ resources:
     configuration:
       sourceArtifactory: art
       buildName: python-app
-      buildNumber: 1      
+      buildNumber: ${run_number}      
 
 pipelines:
   - name: python_pipeline
@@ -29,4 +29,10 @@ pipelines:
             - python setup.py sdist
             - pwd
             - jfrog rt u dist/python-example-0.1.tar.gz python-local
-            
+      - name: publish_build
+        type: PublishBuildInfo
+        configuration:
+          inputSteps:
+            - name: build
+          outputResources:
+            - name: python_app_build_info
